@@ -5,14 +5,11 @@ module.exports = function createTransformStream(opts) {
     return new ByteStuffedTransformStream(opts);
 }
 
-module.exports = class ByteStuffedTransformStream extends Transform {
-    constructor({start, end, escape, xor}) {
+class ByteStuffedTransformStream extends Transform {
+    constructor(opts) {
         this._parser = createParser({
-            start: start,
-            end: end,
-            escape: escape,
-            xor: xor,
-            onMessage: (msg) => { this.push(msg); }
+            onMessage: (msg) => { this.push(msg); },
+            ...opts
         });
     }
 
